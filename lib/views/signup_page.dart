@@ -10,9 +10,6 @@ class SignUpPage extends GetView<SignUpController> {
   @override
   
     const SignUpPage({super.key});
-
-   
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
