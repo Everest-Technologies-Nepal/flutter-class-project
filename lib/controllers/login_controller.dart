@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:authentication/utis/token_handler.dart';
 import 'package:authentication/views/auth_checker.dart';
 import 'package:authentication/views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class LoginController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
-  void login() async  {
+  void login() async {
     var isValid = formKey.currentState!.validate();
 
     if (isValid) {
@@ -21,42 +22,20 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'password': passwordController.text,
       };
-      var response =
-         await http.post(Uri.parse("http://192.168.1.68/login.php"), body: data);
+      var response = await http.post(Uri.parse("http://192.168.1.68/login.php"),
+          body: data);
 
       var responseBody = jsonDecode(response.body);
-      if(responseBody["success"]) {
-        var token  = responseBody["token"];
-        storeToken(token);
-        Get.off(()=> const AuthChecker());
+      if (responseBody["success"]) {
+        var token = responseBody["token"];
+        TokenHandler().storeToken(token);
+        Get.off(() => const AuthChecker());
         Get.snackbar("Success", responseBody["message"]);
-      }else{
-        Get.snackbar("Error",responseBody["message"]);
+      } else {
+        Get.snackbar("Error", responseBody["message"]);
       }
     } else {
       Get.snackbar("Error", "Fields are not valid");
     }
-
-   
   }
-
-   Future<String?> getToken() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var token = prefs.getString("token");
-      return token;
-    }
-   void storeToken(token) async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-      
-    }
-   Future<String?> logout() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var token = prefs.remove("token");
-      Get.off(()=>const AuthChecker());
-      return null;
-    }
-
-
-  
 }

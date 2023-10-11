@@ -1,4 +1,5 @@
 import 'package:authentication/controllers/login_controller.dart';
+import 'package:authentication/utis/token_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,7 @@ class HomePage extends StatelessWidget {
       title: const Text("Home Page"),
       actions: [
         IconButton(onPressed: (){
-          loginController.logout();
+          TokenHandler().logout();
         }, icon: const Icon(Icons.logout))
       ],
     ),

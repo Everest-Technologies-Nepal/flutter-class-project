@@ -1,4 +1,5 @@
 import 'package:authentication/controllers/login_controller.dart';
+import 'package:authentication/utis/token_handler.dart';
 import 'package:authentication/views/home_page.dart';
 import 'package:authentication/views/login_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class AuthChecker extends StatefulWidget {
 }
 
 class _AuthCheckerState extends State<AuthChecker> {
-  final LoginController loginController = Get.find<LoginController>();
   @override
   void initState() {
     // TODO: implement initState
@@ -22,7 +22,7 @@ class _AuthCheckerState extends State<AuthChecker> {
   }
 
   checkLogin() async {
-    var token= await loginController.getToken();
+    var token=await TokenHandler().getToken();
 
     if (token != null) {
       Get.off(() =>  HomePage());

@@ -1,7 +1,6 @@
 import 'package:authentication/components/custom_button.dart';
 import 'package:authentication/components/custom_field.dart';
 import 'package:authentication/components/logo.dart';
-import 'package:authentication/controllers/login_controller.dart';
 import 'package:authentication/controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,7 @@ class SignUpPage extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Form(
-        key: controller.formKey,
+        key: controller.singUPformKey,
         child: Padding(
           padding:  const EdgeInsets.all(8.0),
           child: Column(
@@ -28,9 +27,7 @@ class SignUpPage extends GetView<SignUpController> {
                 label: "Name",
                 controller: controller.nameController,
                 validator:(value){
-                 if(!value.contains("@")){
-                    return "Please enter valid email";
-                 }
+                
                  return null;
                 }
               ),
@@ -39,9 +36,7 @@ class SignUpPage extends GetView<SignUpController> {
                 label: "Phone",
                 controller: controller.phoneController,
                 validator:(value){
-                 if(!value.contains("@")){
-                    return "Please enter valid email";
-                 }
+                
                  return null;
                 }
               ),
@@ -72,7 +67,7 @@ class SignUpPage extends GetView<SignUpController> {
                const SizedBox(height: 20,),
                 CustomButton(
                   label: "Sign Up",
-                  onPressed: ()=>controller.login()
+                  onPressed: ()=>controller.signUp()
                 ),
                 const SizedBox(height: 20,),
                 InkWell(
