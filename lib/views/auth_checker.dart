@@ -27,7 +27,7 @@ class _AuthCheckerState extends State<AuthChecker> {
     if (token != null) {
       Get.off(() =>  HomePage());
     } else {
-      Get.off(() => const LoginPage());
+      Get.off(() =>  const LoginPage());
     }
   }
 

@@ -59,7 +59,7 @@ class LoginPage extends GetView<LoginController> {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () => Get.to(()=> const SignUpPage()),
+                  onTap: () => Get.off(()=> const SignUpPage()),
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(fontSize: 20),

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:authentication/views/login_page.dart';
+import 'package:authentication/views/auth_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +10,9 @@ class SignUpController extends GetxController {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final singUPformKey = GlobalKey<FormState>();
+  final singUPformKey = GlobalKey<FormState>(
+      debugLabel: "singUPformKey"
+  );
 
   Future<void> signUp() async {
     var isValid = singUPformKey.currentState!.validate();
@@ -25,11 +27,12 @@ class SignUpController extends GetxController {
          await http.post(Uri.parse("http://192.168.1.68/signup.php"), body: data);
 
       var responseBody = jsonDecode(response.body);
-      print(responseBody);
       if(responseBody["success"]) {
         // var token  = responseBody["token"];
         // TokenHandler().storeToken(token);
-        // Get.to(()=> const LoginPage());
+        Get.off(()=>
+            const AuthChecker()
+        );
         Get.snackbar("Success", responseBody["message"]);
       }else{
         Get.snackbar("Error",responseBody["message"]);

@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:authentication/utis/token_handler.dart';
 import 'package:authentication/views/auth_checker.dart';
-import 'package:authentication/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>(
+      debugLabel: "loginFormKey"
+  );
 
   void login() async {
     var isValid = formKey.currentState!.validate();
@@ -24,11 +24,11 @@ class LoginController extends GetxController {
       };
       var response = await http.post(Uri.parse("http://192.168.1.68/login.php"),
           body: data);
-
       var responseBody = jsonDecode(response.body);
       if (responseBody["success"]) {
         var token = responseBody["token"];
         TokenHandler().storeToken(token);
+        formKey.currentState!.reset();
         Get.off(() => const AuthChecker());
         Get.snackbar("Success", responseBody["message"]);
       } else {
