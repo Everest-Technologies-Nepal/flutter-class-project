@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:authentication/controllers/hospital_controll.dart';
 import 'package:authentication/controllers/login_controller.dart';
 import 'package:authentication/utis/token_handler.dart';
-import 'package:authentication/views/home_page.dart';
+import 'package:authentication/views/admin/admin_home_page.dart';
+import 'package:authentication/views/normal_user/home_page.dart';
 import 'package:authentication/views/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,12 +26,27 @@ class _AuthCheckerState extends State<AuthChecker> {
   }
 
   checkLogin() async {
-    var token=await TokenHandler().getToken();
-
-    if (token != null) {
-      Get.off(() =>  HomePage());
+    // await TokenHandler().logout();
+    var user = await TokenHandler().getUser();
+    var decodedUser = user != null ? jsonDecode(user) : null;
+    if (decodedUser == null) {
+      Get.off(() => const LoginPage());
     } else {
-      Get.off(() =>  const LoginPage());
+      var role = decodedUser["role"];
+      pageAccordingToRole(role);
+    }
+  }
+
+  void pageAccordingToRole(role) {
+    switch (role) {
+      case '1':
+        Get.off(() =>  HomePage());
+        break;
+      case '2':
+       
+      Get.off(() =>  AdminHome());
+        break;
+      default:
     }
   }
 

@@ -26,8 +26,8 @@ class LoginController extends GetxController {
           body: data);
       var responseBody = jsonDecode(response.body);
       if (responseBody["success"]) {
-        var token = responseBody["token"];
-        TokenHandler().storeToken(token);
+        var data = responseBody;
+        TokenHandler().storeUser(jsonEncode(data));
         formKey.currentState!.reset();
         Get.off(() => const AuthChecker());
         Get.snackbar("Success", responseBody["message"]);
