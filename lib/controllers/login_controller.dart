@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:authentication/utis/token_handler.dart';
+import 'package:authentication/utis/utils.dart';
 import 'package:authentication/views/auth_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'password': passwordController.text,
       };
-      var response = await http.post(Uri.parse("http://192.168.1.68/login.php"),
+      var response = await http.post(Uri.parse("$baseUrl/login.php"),
           body: data);
       var responseBody = jsonDecode(response.body);
       if (responseBody["success"]) {

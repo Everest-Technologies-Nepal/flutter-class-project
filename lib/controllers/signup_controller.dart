@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:authentication/utis/utils.dart';
 import 'package:authentication/views/auth_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class SignUpController extends GetxController {
         'phone': phoneController.text,
       };
       var response =
-         await http.post(Uri.parse("http://192.168.1.68/signup.php"), body: data);
+         await http.post(Uri.parse("$baseUrl/signup.php"), body: data);
 
       var responseBody = jsonDecode(response.body);
       if(responseBody["success"]) {
